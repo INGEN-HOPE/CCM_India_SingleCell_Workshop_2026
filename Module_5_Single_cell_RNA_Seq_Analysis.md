@@ -46,7 +46,7 @@ Open RStudio and install the following packages listed below one by one.
 -   All the package names listed below are case sensitive!
 
 ```r
-#Install required packages
+# Install required packages
 
  install.packages("tidyverse")                                                                                                             
  install.packages("Matrix")                                                                                                             
@@ -64,11 +64,11 @@ Open RStudio and install the following packages listed below one by one.
 -   Open New R script and set the working directory using setwd() command:
 
 ```r
- #Set working directory                                                
+ # Set working directory                                                
                                                                        
  setwd("path/to/working/directory/")                                   
                                                                        
- #Check if it has changed to desired path                              
+ # Check if it has changed to desired path                              
                                                                        
  getwd()                                                               
 ```
@@ -122,7 +122,7 @@ These files can be read into R using various functions including:
 -   Reading single-sample
 
 ```r
- #Read in sample directory to create sparse matrix                     
+ # Read in sample directory to create sparse matrix                     
                                                                        
  seurat_data <- Read10X(data.dir = "Data/b08st05")                     
                                                                        
@@ -134,12 +134,12 @@ These files can be read into R using various functions including:
 -   Reading into multiple samples using for loop
 
 ```r
- #set working directory                                                
+ # Set working directory                                                
                                                                        
  setwd("E:/3rd_INDO-VIETNAM_WORKSHOP/Data/")                           
                                                                        
  #Looping through each sample directory to create a final Seurat object                                                                
-for (file in c("b08st05", "b08st06","b14st04","b14st05")){
+for (file in c("b08st05","b08st06","b14st04","b14st05")){
 seurat_data <- Read10X(data.dir = file)
 seurat_obj <- CreateSeuratObject(counts = seurat_data, 
                                  min.features = 100, 
@@ -170,7 +170,7 @@ following command:
 
 ```r
 
- #Manually assign orig.ident                                           
+ # Manually assign orig.ident                                           
  b08st05$orig.ident <- "b08st05"                                                                           
  b08st06$orig.ident <- "b08st06"                                                                                                     
  b14st04$orig.ident <- "b14st04"                                                                                                       
@@ -178,9 +178,14 @@ following command:
                                                                        
  #Merge individual seurat object into one large object                 
                                                                        
- merged_seurat <- merge(x = b08st05, 
-                        y = list(b08st06,b14st04,b14st05),
-                        add.cell.ids = c("b08st05", "b08st06","b14st04","b14st05"))                                 
+merged_seurat <- merge(x = b08st05, 
+                       y = list(b08st06,
+                                b14st04,
+                                b14st05),
+                       add.cell.ids = c("b08st05",
+                                        "b08st06",
+                                        "b14st04",
+                                        "b14st05"))                                 
 ```
 
 After creating the seurat object the Global R environment will look
@@ -263,25 +268,31 @@ the percentage of reads mapping to mitochondrial genes.
 **5.2 Visualising Counts**
 
 ```r
- #Visualize number of genes per cell                                   
+ # Visualize number of genes per cell                                   
                                                                        
- VlnPlot(merged_seurat, features = "nFeature_RNA", group.by = "orig.ident")                                                       
+ VlnPlot(merged_seurat,
+        features = "nFeature_RNA",
+        group.by = "orig.ident")                                                      
 ```
 
 ![](images/media/image15.png)
 
 ```r
- #Visualize number of reads per cell                                   
+ # Visualize number of reads per cell                                   
                                                                        
- VlnPlot(merged_seurat, features = "nCount_RNA", group.by = "orig.ident")                                                       
+ VlnPlot(merged_seurat,
+        features = "nCount_RNA",
+        group.by = "orig.ident")                                                       
 ```
 
 ![](images/media/image19.png)
 
 ```r
- #Visualise percentage of mitochondrial reads per cell              
+ # Visualise percentage of mitochondrial reads per cell              
                                                                     
- VlnPlot(merged_seurat, features = "percent.mt", group.by = "orig.ident")                                                       
+ VlnPlot(merged_seurat,
+        features = "percent.mt",
+        group.by = "orig.ident")                                                       
 ```
 
 ![](images/media/image20.png)
@@ -293,11 +304,12 @@ before moving to the next step. So, let's look at the relationships
 between the QC metrics:
 
 ```r
- #To visualize the relationship between total reads per cell and mitochondrial reads percentage                                        
+ # To visualize the relationship between total reads per cell and mitochondrial reads percentage                                        
                                                                        
- FeatureScatter(merged_seurat, feature1 = "nCount_RNA", 
-                               feature2 ="percent.mt", 
-                               group.by = "orig.ident")                            
+FeatureScatter(merged_seurat,
+               feature1 = "nCount_RNA", 
+               feature2 ="percent.mt", 
+               group.by = "orig.ident")                            
 ```
 
 Notice that the cells with high percent.mt also have very low read
@@ -307,7 +319,10 @@ out. ![](images/media/image16.png)
 ```r
 # To visualize the relationship between total reads per cell and total features (genes) per cell                                     
                                                                      
- FeatureScatter(merged_seurat, feature1 = "nCount_RNA", feature2 = "nFeature_RNA", group.by = "orig.ident")                          
+FeatureScatter(merged_seurat,
+               feature1 = "nCount_RNA",
+               feature2 = "nFeature_RNA",
+               group.by = "orig.ident")                          
 ```
 
 ![](images/media/image8.png)
@@ -326,14 +341,16 @@ out outlier cells:
 -   percent.mt (mitochondrial reads percentage/cell) < 20%(exclude non-viable cells)
 
 ```r
- #define condition for filtering                                       
+ # Define condition for filtering                                       
                                                                        
- cells_to_filter <- rownames(subset(merged_seurat, 
- subset = nFeature_RNA > 100 & nFeature_RNA < 2500 & percent.mt <20)@meta.data)
+ cells_to_filter <- rownames(subset(merged_seurat,
+                                   subset = nFeature_RNA > 100 &
+                                     nFeature_RNA < 2500 &
+                                     percent.mt <20)@meta.data)
                                                                        
  # add this information to the metadata                               
                                                                        
- merged_seurat$keep <-rownames(merged_seurat@meta.data) %in% cells_to_filter                                                       
+ merged_seurat$keep <- rownames(merged_seurat@meta.data) %in% cells_to_filter                                                       
 ```
 
 Let us quickly see the number of cells we are retaining:
@@ -353,9 +370,10 @@ Here, a total of 3743 cells did not pass the filter and will be removed
 from further analysis.
 
 ```r
-#Remove cells with keep = FALSE                                       
+# Remove cells with keep = FALSE                                       
                                                                       
 merged_seurat <- subset(merged_seurat, subset = keep)                                                                    
+
 merged_seurat                                                        
 ```
 ```r
@@ -373,7 +391,7 @@ After getting our high quality cells it is important to normalize our
 data before cell clustering for accurate comparisons between cells.
 
 ```r
- #Install glmGamPoi for faster estimation                              
+ # Install glmGamPoi for faster estimation                              
                                                                        
  BiocManager::install('glmGamPoi')                                   
                                                                        
