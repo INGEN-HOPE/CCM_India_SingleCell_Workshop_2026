@@ -399,7 +399,9 @@ data before cell clustering for accurate comparisons between cells.
                                                                        
  merged_seurat <- SCTransform(merged_seurat,                          
                               vars.to.regress = "percent.mt",                                     
-                              variable.features.n = 3000)                                           
+                              variable.features.n = 3000)
+
+merged_seurat                                 
 ```
 
 **Note:** *variable.features.n takes the top variable features(genes).*
@@ -444,7 +446,8 @@ cells are pointing towards thousands of features making it a high
 multidimensional space.
 
  ```r
-  merged_seurat <- RunPCA(merged_seurat, features = VariableFeatures(object = merged_seurat))
+ merged_seurat <- RunPCA(merged_seurat,
+                        features = VariableFeatures(object = merged_seurat))
 ```
 
 ```r
