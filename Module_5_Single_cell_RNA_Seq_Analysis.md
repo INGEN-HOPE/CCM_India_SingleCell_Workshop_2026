@@ -108,7 +108,7 @@ sequencing data which are as follows:
 
 -   **matrix.mtx -** Text file containing the count value matrix where geneIDs are specified by rows and cell barcodes are specified by columns.
 
-We can see them inside 3rd_INDO_VIETNAM_WORKSHOP/Data/b08st05/
+We can see them inside /Data/b08st05/
 folder:![](images/media/image4.png)
 
 These files can be read into R using various functions including:
