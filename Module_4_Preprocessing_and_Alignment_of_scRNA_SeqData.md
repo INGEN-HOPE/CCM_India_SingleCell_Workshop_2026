@@ -154,7 +154,7 @@ gunzip /path/to/GRCh38.primary_assembly.genome.fa.gz
 
 ```r
 wget -P ../reference/fasta \
-https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_49/GRCh38.primary_assembly.genome.fa.gz
+https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/latest_release/GRCh38.primary_assembly.genome.fa.gz
 gunzip ../reference/fasta/GRCh38.primary_assembly.genome.fa.gz
 ```
 
@@ -162,15 +162,15 @@ gunzip ../reference/fasta/GRCh38.primary_assembly.genome.fa.gz
 
 ```r
 wget -P /path/to/gtf \
-https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_49/gencode.v49.annotation.gtf.gz
-gunzip /path/to/gencode.v49.annotation.gtf.gz
+https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/latest_release/gencode.v50.primary_assembly.annotation.gtf.gz
+gunzip /path/to/gencode.v50.primary_assembly.annotation.gtf.gz
 ```
 
 **Example Command**
 
 ```r
 wget -P ../reference/gtf \
-https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_49/gencode.v49.annotation.gtf.gz
+https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/latest_release/GRCh38.primary_assembly.genome.fa.gz
 gunzip ../reference/gtf/gencode.v49.annotation.gtf.gz
 ```
 
@@ -198,7 +198,7 @@ STAR \
 --runMode genomeGenerate \
 --genomeDir /path/to/star_index \
 --genomeFastaFiles /path/to/fasta/GRCh38.primary_assembly.genome.fa \
---sjdbGTFfile /path/to/gtf/gencode.v49.annotation.gtf \
+--sjdbGTFfile /path/to/gtf/gencode.v50.primary_assembly.annotation.gtf \
 --sjdbOverhang 149
 ```
 
@@ -210,7 +210,7 @@ STAR \
 --runMode genomeGenerate \
 --genomeDir ../reference/star_index \
 --genomeFastaFiles ../reference/fasta/GRCh38.primary_assembly.genome.fa \
---sjdbGTFfile ../reference/gtf/gencode.v49.annotation.gtf \
+--sjdbGTFfile ../reference/gtf/gencode.v50.primary_assembly.annotation.gtf \
 --sjdbOverhang 149
 ```
 
