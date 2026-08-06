@@ -170,8 +170,8 @@ gunzip /path/to/gencode.v50.primary_assembly.annotation.gtf.gz
 
 ```r
 wget -P ../reference/gtf \
-https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/latest_release/GRCh38.primary_assembly.genome.fa.gz
-gunzip ../reference/gtf/gencode.v49.annotation.gtf.gz
+https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/latest_release/gencode.v50.primary_assembly.annotation.gtf.gz
+gunzip ../reference/gtf/gencode.v50.primary_assembly.annotation.gtf.gz
 ```
 
 # 
